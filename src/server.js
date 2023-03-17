@@ -9,7 +9,7 @@ require('dotenv').config();
 let app = express();
 // || 'http://localhost:8081'
 const corsOptions = {
-    origin: process.env.REACT_APP_FRONTEND_URL || 'http://192.168.1.56:8081',
+    origin: process.env.REACT_APP_FRONTEND_URL,
     credentials: true,
     optionSuccessStatus: 200
 }

@@ -87,6 +87,7 @@ let createNewUser = (data) => {
                     password: hashPasswordFromBcrypt,
                     firstName: data.firstName,
                     lastName: data.lastName,
+                    birthday: data.birthday,
                     address: data.address,
                     phonenumber: data.phonenumber,
                     gender: data.gender,
