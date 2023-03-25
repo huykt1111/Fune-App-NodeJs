@@ -1,6 +1,7 @@
 import productService from '../services/productService'
 const create = async (req, res) => {
-    const { name, description, id_category, id_user, is_public, currency, pricing, stock } = req.body
+    const { name, description, category, id_user, is_public, currency, pricing, stock } = req.body
+    const id_category = category;
     const file = req.file;
     if (file) {
         const media_type = file.mimetype;
