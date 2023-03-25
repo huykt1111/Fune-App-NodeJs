@@ -25,8 +25,40 @@ const create = (data) => {
         }
     })
 }
-
+const gets = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const products = await db.Product.findAll();
+            resolve({ products, message: 'get productc success!' })
+        } catch (error) {
+            reject(error);
+        }
+    })
+}
+const getProductByID = (data) => {
+    const id_product = data.id_product;
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (id_product) {
+                const product = await db.Product.findOne({
+                    where: { id: id_product }
+                })
+                if (product) {
+                    resolve({ product, message: 'get product success!' })
+                }
+                else {
+                    resolve({ message: 'Can not find out product!' })
+                }
+            }
+            else {
+                resolve({ message: 'Can not find id_product!' })
+            }
+        } catch (e) {
+            reject(e);
+        }
+    })
+}
 
 module.exports = {
-    create
+    create, gets, getProductByID
 }

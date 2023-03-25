@@ -7,12 +7,12 @@ router.post(
   upload("medias").single('media'),
   productController.create
 );
-router.post(
+router.get(
   '/gets',
-  productController.create
+  productController.gets
 );
-router.post(
+router.get(
   '/get',
-  productController.create
+  productController.get
 );
 export default router;

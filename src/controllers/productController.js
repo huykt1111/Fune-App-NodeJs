@@ -11,9 +11,24 @@ const create = async (req, res) => {
             message
         })
     }
-
+}
+const gets = async (req, res) => {
+    const { products, message } = await productService.gets();
+    return res.status(200).json({
+        products, message
+    })
+}
+const get = async (req, res) => {
+    const { id_product } = req.body
+    const { product, message } = await productService.getProductByID({ id_product });
+    return res.status(200).json({
+        message,
+        product
+    })
 }
 
 module.exports = {
-    create
+    create,
+    gets,
+    get
 }
