@@ -9,7 +9,6 @@ router.post(
 );
 router.post(
   '/gets',
-
   productController.create
 );
 router.post(

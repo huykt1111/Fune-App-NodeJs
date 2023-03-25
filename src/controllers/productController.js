@@ -1,23 +1,16 @@
-import userService from "../services/userService";
-
+import productService from '../services/productService'
 const create = async (req, res) => {
-    let email = req.body.email;
-    let password = req.body.password;
-
-    if (!email || !password) {
-        return res.status(500).json({
-            errCode: '1',
-            message: 'Missing inputs parameter!'
+    const { name, description, id_category, id_user, is_public, currency, pricing, stock } = req.body
+    const file = req.file;
+    if (file) {
+        const media_type = file.mimetype;
+        const media = file.filename;
+        const { message } = await productService.create({ name, description, id_category, id_user, is_public, currency, pricing, stock, media_type, media });
+        return res.status(200).json({
+            message
         })
     }
 
-    let userData = await userService.handleUserLogin(email, password);
-
-    return res.status(200).json({
-        errCode: userData.errCode,
-        message: userData.errMessage,
-        user: userData.user ? userData : {}
-    })
 }
 
 module.exports = {

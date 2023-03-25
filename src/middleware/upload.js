@@ -6,6 +6,7 @@ const upload = (url) => {
             callBack(null, 'src/public/' + url);   // './public/images/' directory name where save the file
         },
         filename: (req, file, callBack) => {
+            console.log("---------------------------file----------", file)
             const ext = path.extname(file.originalname);
             const newName = `${Date.now()}-${Math.round(Math.random() * 1E9)}${ext}`;
             callBack(null, newName);

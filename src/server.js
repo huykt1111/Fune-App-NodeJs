@@ -13,13 +13,14 @@ const corsOptions = {
     credentials: true,
     optionSuccessStatus: 200
 }
+app.use('/', express.static('src/public'));
 app.use(cors(corsOptions));
 
 // config app
 // app.use(bodyParser.json());
 // app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json({ limit: '50mb' }));
-app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 
 
