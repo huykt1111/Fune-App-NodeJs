@@ -22,7 +22,9 @@ let handleUserLogin = (email, password) => {
             if (isExist) {
                 let user = await db.User.findOne({
                     where: { email: email },
-                    attributes: ['email', 'roleId', 'password', 'firstName', 'lastName'],
+                    attributes: ['id', 'email', 'password', 'firstName', 'lastName', 'birthday', 'address',
+                        'phonenumber', 'gender', 'image', 'roleId', 'description', 'background', 'note'
+                    ],
                     raw: true
                 });
                 if (user) {
@@ -106,8 +108,42 @@ let createNewUser = (data) => {
     })
 }
 
+let updateUser = (data) => {
+    return new Promise(async (resolve, reject) => {
+        console.log(data);
+        try {
+            let user = await db.User.findOne({
+                where: { id: data.id_user },
+                raw: false
+            });
+            if (user) {
+                user.email = data.email;
+                user.firstName = data.firstName;
+                user.lastName = data.lastName;
+                user.birthday = data.dobLabel;
+                user.gender = data.gender;
+                user.description = data.description;
+                user.note = data.note;
+                user.background = data.media;
+                user.image_type = data.media_type;
+
+                await user.save();
+
+                resolve({
+                    errCode: 0,
+                    message: 'OK'
+                });
+            }
+
+        } catch (e) {
+            console.log(e);
+        }
+    })
+}
+
 
 module.exports = {
     handleUserLogin: handleUserLogin,
     createNewUser: createNewUser,
+    updateUser: updateUser
 }
