@@ -14,6 +14,33 @@ let hashUserPassword = (password) => {
     });
 }
 
+let getAllUsers = (userId) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let users = '';
+            if (userId === 'ALL') {
+                users = await db.User.findAll({
+                    attributes: {
+                        exclude: ['password']
+                    }
+                });
+            }
+
+            if (userId && userId !== 'ALL') {
+                users = await db.User.findOne({
+                    where: { id: userId },
+                    attributes: {
+                        exclude: ['password']
+                    }
+                });
+            }
+            resolve(users);
+        } catch (e) {
+            reject(e);
+        }
+    })
+}
+
 let handleUserLogin = (email, password) => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -145,5 +172,6 @@ let updateUser = (data) => {
 module.exports = {
     handleUserLogin: handleUserLogin,
     createNewUser: createNewUser,
-    updateUser: updateUser
+    updateUser: updateUser,
+    getAllUsers: getAllUsers
 }
