@@ -1,0 +1,21 @@
+import multer from 'multer';
+import path from "path";
+const upload = (url) => {
+    var storage = multer.diskStorage({
+        destination: (req, file, callBack) => {
+            callBack(null, 'src/public/' + url);   // './public/images/' directory name where save the file
+        },
+        filename: (req, file, callBack) => {
+            console.log(file)
+            const ext = path.extname(file.originalname);
+            const newName = `${file.originalname}-${Date.now()}-${Math.round(Math.random() * 1E9)}${ext}`;
+            callBack(null, newName);
+        }
+    })
+
+    const upload = multer({
+        storage: storage
+    });
+    return upload
+}
+export default upload

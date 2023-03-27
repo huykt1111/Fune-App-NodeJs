@@ -2,7 +2,6 @@ import userService from "../services/userService";
 
 let handleGetAllUsers = async (req, res) => {
     const { id } = req.body
-    console.log("req", req.body)
     if (!id) {
         return res.status(200).json({
             errCode: 1,
@@ -46,11 +45,29 @@ let handleRegister = async (req, res) => {
 
 let updateUser = async (req, res) => {
     const { id_user, description, email, dobLabel, gender, note } = req.body;
-    const file = req.file;
-    if (file) {
-        const media_type = file.mimetype;
-        const media = file.filename;
+    const files = req.files;
+    if (files.media && files.imageIndi) {
+        const media_type = files.media[0].mimetype;
+        const media = files.media[0].filename;
+        const photo_type = files.imageIndi[0].mimetype;
+        const photo = files.imageIndi[0].filename;
+        const message = await userService.updateUser({ id_user, description, email, dobLabel, gender, note, media_type, media, photo, photo_type });
+        return res.status(200).json({
+            message
+        })
+    }
+    else if (files.media) {
+        const media_type = files.media[0].mimetype;
+        const media = files.media[0].filename;
         const message = await userService.updateUser({ id_user, description, email, dobLabel, gender, note, media_type, media });
+        return res.status(200).json({
+            message
+        })
+    }
+    else if (files.imageIndi) {
+        const photo_type = files.imageIndi[0].mimetype;
+        const photo = files.imageIndi[0].filename;
+        const message = await userService.updateUser({ id_user, description, email, dobLabel, gender, note, photo_type, photo });
         return res.status(200).json({
             message
         })

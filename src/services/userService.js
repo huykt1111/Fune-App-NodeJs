@@ -151,9 +151,14 @@ let updateUser = (data) => {
                 user.gender = data.gender;
                 user.description = data.description;
                 user.note = data.note;
-                user.background = data.media;
-                user.image_type = data.media_type;
-
+                if (data.media) {
+                    user.background = data.media;
+                    user.background_type = data.media_type;
+                }
+                if (data.photo) {
+                    user.image = data.photo;
+                    user.image_type = data.photo_type;
+                }
                 await user.save();
 
                 resolve({
