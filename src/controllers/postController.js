@@ -9,7 +9,8 @@ const create = async (req, res) => {
 
 }
 const gets = async (req, res) => {
-    const { posts, message } = await postService.gets();
+    const { limit, offset } = req
+    const { posts, message } = await postService.gets({ limit, offset });
     return res.status(200).json({
         posts, message
     })

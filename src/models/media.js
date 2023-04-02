@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
+      Media.belongsTo(models.Post, { foreignKey: 'id_post' });
     }
   }
   Media.init({
