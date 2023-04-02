@@ -10,11 +10,13 @@ module.exports = (sequelize, DataTypes) => {
          * The `models/index` file will call this method automatically.
          */
         static associate(models) {
+            Member.belongsTo(models.Room, { foreignKey: 'idRoom', targetKey: 'id', as: 'memberData' })
         }
     }
     Member.init({
         idRoom: DataTypes.STRING,
         idMember: DataTypes.STRING,
+        follow: DataTypes.STRING,
     }, {
         sequelize,
         modelName: 'Member',

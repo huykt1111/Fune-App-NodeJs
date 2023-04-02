@@ -5,4 +5,10 @@ const router = express.Router();
 router.post(
     '/create', roomController.createRoom
 );
+router.get(
+    '/get/create', roomController.getRoomCreate
+);
+router.get(
+    '/get/not-joined', roomController.getRoomNotJoined
+);
 export default router;

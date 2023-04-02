@@ -12,7 +12,10 @@ module.exports = {
             idRoom: {
                 type: Sequelize.STRING
             },
-            idUser: {
+            idMember: {
+                type: Sequelize.STRING
+            },
+            follow: {
                 type: Sequelize.STRING
             },
             createdAt: {
