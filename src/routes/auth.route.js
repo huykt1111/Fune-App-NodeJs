@@ -1,6 +1,6 @@
 
 import express from "express";
-import upload from "../middleware/uploadi";
+import upload from "../middleware/upload";
 import userController from "../controllers/userController";
 const router = express.Router();
 router.post('/get-users', userController.handleGetAllUsers);
