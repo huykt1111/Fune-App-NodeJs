@@ -13,8 +13,10 @@ module.exports = (sequelize, DataTypes) => {
         }
     }
     PostRoom.init({
+        id_user: DataTypes.STRING,
+        description: DataTypes.STRING,
         idRoom: DataTypes.STRING,
-        idUser: DataTypes.STRING,
+        is_public: DataTypes.BOOLEAN,
     }, {
         sequelize,
         modelName: 'PostRoom',

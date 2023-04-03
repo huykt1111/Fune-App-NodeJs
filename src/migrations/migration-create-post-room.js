@@ -9,11 +9,17 @@ module.exports = {
                 primaryKey: true,
                 type: Sequelize.INTEGER
             },
+            id_user: {
+                type: Sequelize.INTEGER
+            },
+            description: {
+                type: Sequelize.STRING
+            },
             idRoom: {
                 type: Sequelize.STRING
             },
-            idUser: {
-                type: Sequelize.STRING
+            is_public: {
+                type: Sequelize.BOOLEAN
             },
             createdAt: {
                 allowNull: false,

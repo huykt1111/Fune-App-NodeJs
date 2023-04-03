@@ -2,17 +2,20 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
     async up(queryInterface, Sequelize) {
-        await queryInterface.createTable('FollowerRooms', {
+        await queryInterface.createTable('MediaRooms', {
             id: {
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,
                 type: Sequelize.INTEGER
             },
-            idRoom: {
+            id_post: {
+                type: Sequelize.INTEGER
+            },
+            media: {
                 type: Sequelize.STRING
             },
-            idUser: {
+            type: {
                 type: Sequelize.STRING
             },
             createdAt: {
@@ -26,7 +29,7 @@ module.exports = {
         });
     },
     async down(queryInterface, Sequelize) {
-        await queryInterface.dropTable('FollowerRooms');
+        await queryInterface.dropTable('MediaRooms');
     }
 };
 
