@@ -41,10 +41,72 @@ const create = (data) => {
     })
 }
 const gets = (data) => {
+    const { offset, limit } = data;
     return new Promise(async (resolve, reject) => {
+        console.log("offset, limit", offset, limit)
         try {
-            const products = await db.Product.findAll();
-            resolve({ products, message: 'get productc success!' })
+            const posts = await db.Post.findAll({
+                limit,
+                offset,
+                include: [{
+                    model: db.Media,
+                    as: 'medias',
+                    order: [
+                        db.sequelize.literal('medias.type LIKE "video/%" DESC'),
+                        ['createdAt', 'DESC']
+                    ]
+                },
+                {
+                    model: db.User,
+                    as: 'User',
+                    attributes: ['id', 'email', 'firstName', 'lastName', 'image']
+                }
+                ],
+                raw: true,
+
+            });
+            const postArr = posts.reduce((accumulator, post) => {
+                const index = accumulator.findIndex((item) => item.id === post.id);
+                if (index > -1) {
+                    accumulator[index].medias.push({
+                        id_media: post['medias.id'],
+                        media: post['medias.media'],
+                        type: post['medias.type'],
+                        id_user: post['User.id'],
+                        firstName: post['User.firstName'],
+                        lastName: post['User.lastName'],
+                        avatar: post['User.image'],
+                        email: post['User.email']
+                    })
+                }
+                else {
+                    const { 'medias.id': id_media,
+                        'medias.media': media,
+                        'medias.type': type,
+                        'User.id': id_user,
+                        'User.email': email,
+                        'User.firstName': firstName,
+                        'User.lastName': lastName,
+                        'User.image': avatar,
+                        ...restPost } = post;
+                    accumulator.push({
+                        ...restPost,
+                        medias: [{
+                            id_media,
+                            media,
+                            type,
+                            id_user,
+                            email,
+                            firstName,
+                            lastName,
+                            avatar
+                        }]
+                    })
+                }
+                return accumulator;
+            }, [])
+
+            resolve({ posts: postArr, message: 'ok' });
         } catch (error) {
             reject(error);
         }
