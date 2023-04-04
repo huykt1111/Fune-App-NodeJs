@@ -27,8 +27,18 @@ const get = async (req, res) => {
     })
 }
 
+const getProductByUser = async (req, res) => {
+    const { id_user } = req.query;
+    const { product, message } = await productService.getProductByUser({ id_user });
+    return res.status(200).json({
+        message,
+        product
+    })
+}
+
 module.exports = {
     create,
     gets,
-    get
+    get,
+    getProductByUser
 }

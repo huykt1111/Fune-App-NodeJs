@@ -15,4 +15,8 @@ router.get(
   '/get',
   productController.get
 );
+router.get(
+  '/get/by/id',
+  productController.getProductByUser
+)
 export default router;

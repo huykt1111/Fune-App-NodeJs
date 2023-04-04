@@ -25,7 +25,7 @@ const create = (data) => {
         }
     })
 }
-const gets = (data) => {
+const gets = () => {
     return new Promise(async (resolve, reject) => {
         try {
             const products = await db.Product.findAll();
@@ -59,6 +59,30 @@ const getProductByID = (data) => {
     })
 }
 
+const getProductByUser = (data) => {
+    const id_user = data.id_user;
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (id_user) {
+                const product = await db.Product.findAll({
+                    where: { id_user: id_user }
+                })
+                if (product) {
+                    resolve({ product, message: 'get product success!' })
+                }
+                else {
+                    resolve({ message: 'Can not find out product!' })
+                }
+            }
+            else {
+                resolve({ message: 'Can not find id_user!' })
+            }
+        } catch (e) {
+            reject(e);
+        }
+    })
+}
+
 module.exports = {
-    create, gets, getProductByID
+    create, gets, getProductByID, getProductByUser
 }
