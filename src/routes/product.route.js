@@ -19,4 +19,8 @@ router.get(
   '/get/by/id',
   productController.getProductByUser
 )
+router.get(
+  '/get/search',
+  productController.getSearchProduct
+)
 export default router;

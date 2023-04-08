@@ -1,4 +1,6 @@
 import db from "../models/index";
+const { Op } = require("sequelize");
+
 const create = (data) => {
     const { name, description, id_category, id_user, is_public, currency, pricing, stock, media, media_type } = data
     return new Promise(async (resolve, reject) => {
@@ -83,6 +85,31 @@ const getProductByUser = (data) => {
     })
 }
 
+const getSearchProduct = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const keyword = data.keyword;
+            const products = await db.Product.findAll({
+                where: {
+                    name: {
+                        [Op.like]: `%${keyword}%`
+                    }
+                }
+            });
+            if (products) {
+                console.log(products)
+                resolve({ products, message: 'Get product success!' })
+            }
+            else {
+                resolve({ message: 'Can not find out product!' })
+            }
+        } catch (e) {
+            reject(e);
+        }
+    })
+}
+
+
 module.exports = {
-    create, gets, getProductByID, getProductByUser
+    create, gets, getProductByID, getProductByUser, getSearchProduct
 }

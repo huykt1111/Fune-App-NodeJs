@@ -36,9 +36,20 @@ const getProductByUser = async (req, res) => {
     })
 }
 
+const getSearchProduct = async (req, res) => {
+    console.log(req.query);
+    const { keyword } = req.query;
+    const { products, message } = await productService.getSearchProduct({ keyword });
+    return res.status(200).json({
+        message,
+        products
+    })
+}
+
 module.exports = {
     create,
     gets,
     get,
-    getProductByUser
+    getProductByUser,
+    getSearchProduct
 }

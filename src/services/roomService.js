@@ -4,7 +4,6 @@ const { Op } = require("sequelize");
 let createRoom = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            console.log(data);
             await db.Room.create({
                 name: data.roomName,
                 idUser: data.id_user,
