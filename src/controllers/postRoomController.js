@@ -9,7 +9,10 @@ const create = async (req, res) => {
 
 }
 const gets = async (req, res) => {
-    const { posts, message } = await postRoomService.gets();
+    let { limit, offset, idRoom } = req.query
+    limit = Number(limit.trim());
+    offset = Number(offset.trim())
+    const { posts, message } = await postRoomService.gets({ limit, offset, idRoom });
     return res.status(200).json({
         posts, message
     })

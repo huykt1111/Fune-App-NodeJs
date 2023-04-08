@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
          * The `models/index` file will call this method automatically.
          */
         static associate(models) {
+            MediaRoom.belongsTo(models.PostRoom, { foreignKey: 'id_post' });
         }
     }
     MediaRoom.init({
