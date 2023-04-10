@@ -12,7 +12,8 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       this.belongsTo(models.User, { foreignKey: 'id_user', targetKey: 'id' });
       this.hasMany(models.Media, { foreignKey: 'id_post', as: 'medias' });
-
+      this.hasMany(models.CommentPost, { foreignKey: 'id_post', as: 'CommentPosts' })
+      this.hasMany(models.LovePost, { foreignKey: 'id_post', as: 'LovePosts' })
     }
   }
   Post.init({
