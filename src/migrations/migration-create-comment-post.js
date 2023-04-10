@@ -20,13 +20,13 @@ module.exports = {
             },
             id_parent: {
                 type: Sequelize.INTEGER
-            }
+            },
             status: {
                 type: Sequelize.BOOLEAN
             },
             loves: {
                 type: Sequelize.INTEGER
-            }
+            },
             createdAt: {
                 allowNull: false,
                 type: Sequelize.DATE

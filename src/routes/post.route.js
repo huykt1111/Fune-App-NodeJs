@@ -7,6 +7,10 @@ router.post(
   upload("medias").array('medias'),
   postController.create
 );
+router.post(
+  '/love',
+  postController.love
+);
 router.get(
   '/gets',
   postController.gets
