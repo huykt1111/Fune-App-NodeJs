@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       User.hasOne(models.Member, { foreignKey: 'idMember' })
       User.hasOne(models.CommentRoom, { foreignKey: 'idUser' })
       this.hasMany(models.Post, { foreignKey: 'id_user', as: 'posts' });
+      this.hasMany(models.Cart, { foreignKey: 'idUser', as: 'carts' });
       this.hasMany(models.Product, { foreignKey: 'id_user', as: 'products' });
     }
   }
