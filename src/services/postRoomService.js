@@ -45,7 +45,6 @@ const create = (data) => {
 const gets = (data) => {
     const { offset, limit, idRoom } = data;
     return new Promise(async (resolve, reject) => {
-        console.log("offset, limit", offset, limit)
         try {
             if (idRoom) {
                 const posts = await db.PostRoom.findAll({

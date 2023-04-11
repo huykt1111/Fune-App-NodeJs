@@ -81,7 +81,6 @@ const love = (data) => {
 const gets = (data) => {
     const { offset, limit, id_user } = data;
     return new Promise(async (resolve, reject) => {
-        console.log("offset, limit", offset, limit, id_user)
         try {
             const posts = await db.Post.findAll({
                 limit,

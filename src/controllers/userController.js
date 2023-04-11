@@ -43,6 +43,27 @@ let handleRegister = async (req, res) => {
     return res.status(200).json(message);
 }
 
+let createAddress = async (req, res) => {
+    let message = await userService.createAddress(req.body);
+    return res.status(200).json(message);
+}
+
+let updateAddress = async (req, res) => {
+    let message = await userService.updateAddress(req.body);
+    return res.status(200).json(message);
+}
+
+
+let getsAddress = async (req, res) => {
+    let message = await userService.getsAddress(req.query);
+    return res.status(200).json(message);
+}
+
+let getsAddressByUser = async (req, res) => {
+    let message = await userService.getsAddressByUser(req.query);
+    return res.status(200).json(message);
+}
+
 let updateUser = async (req, res) => {
     const { id_user, description, email, dobLabel, gender, note } = req.body;
     const files = req.files;
@@ -84,5 +105,8 @@ module.exports = {
     handleLogin: handleLogin,
     handleRegister: handleRegister,
     updateUser: updateUser,
-    handleGetAllUsers: handleGetAllUsers
+    handleGetAllUsers: handleGetAllUsers,
+    createAddress,
+    getsAddress,
+    updateAddress, getsAddressByUser
 }

@@ -173,10 +173,104 @@ let updateUser = (data) => {
     })
 }
 
+let updateAddress = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let user = await db.User.findOne({
+                where: { id: data.id_user },
+                raw: false
+            });
+            if (user) {
+                user.address = data.address;
+
+                await user.save();
+
+                resolve({
+                    errCode: 0,
+                    message: 'OK'
+                });
+            }
+
+        } catch (e) {
+            console.log(e);
+        }
+    })
+}
+
+const createAddress = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            await db.Address.create({
+                idUser: data.id_user,
+                address: data.address,
+                district: data.district,
+                province: data.province,
+                country: data.country,
+                phone: data.phone
+            });
+            resolve({
+                errCode: 0,
+                message: 'OK'
+            });
+
+        } catch (e) {
+            reject(e);
+        }
+    })
+}
+
+let getsAddress = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let address = await db.Address.findAll({
+                where: {
+                    idUser: data.id_user
+                },
+                raw: false,
+                nest: true
+            })
+
+            if (!address) address = [];
+
+            resolve({
+                errCode: 0,
+                data: address
+            })
+        } catch (e) {
+            reject(e);
+        }
+    })
+}
+
+let getsAddressByUser = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let address = await db.Address.findOne({
+                where: {
+                    id: data.address
+                },
+                raw: false,
+                nest: true
+            })
+
+            resolve({
+                errCode: 0,
+                data: address
+            })
+        } catch (e) {
+            reject(e);
+        }
+    })
+}
+
 
 module.exports = {
     handleUserLogin: handleUserLogin,
     createNewUser: createNewUser,
     updateUser: updateUser,
-    getAllUsers: getAllUsers
+    getAllUsers: getAllUsers,
+    getsAddress,
+    createAddress,
+    updateAddress,
+    getsAddressByUser
 }
