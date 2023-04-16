@@ -3,7 +3,10 @@ const create = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
             let cart = await db.Cart.findOne({
-                where: { idProduct: data.idProduct },
+                where: {
+                    idUser: data.idUser,
+                    idProduct: data.idProduct
+                },
                 raw: false,
             })
             if (cart) {
@@ -32,7 +35,10 @@ const increase = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
             let cart = await db.Cart.findOne({
-                where: { idProduct: data.idProduct },
+                where: {
+                    idUser: data.idUser,
+                    idProduct: data.idProduct
+                },
                 raw: false,
             })
             if (cart) {
@@ -54,7 +60,10 @@ const decrease = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
             let cart = await db.Cart.findOne({
-                where: { idProduct: data.idProduct },
+                where: {
+                    idUser: data.idUser,
+                    idProduct: data.idProduct
+                },
                 raw: false,
             })
             if (cart) {
@@ -102,10 +111,62 @@ let gets = (data) => {
     })
 }
 
+const deletes = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let cart = await db.Cart.findAll({
+                where: {
+                    idUser: data.idUser,
+                },
+                raw: false,
+            })
+            if (cart) {
+                // update
+                for (let i = 0; i < cart.length; i++) {
+                    await cart[i].destroy();
+                }
+
+            }
+            resolve({
+                errCode: 0,
+                message: 'OK'
+            });
+        } catch (error) {
+            reject(error);
+        }
+    })
+}
+
+const deletecart = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let cart = await db.Cart.findOne({
+                where: {
+                    idUser: data.idUser,
+                    idProduct: data.idProduct
+                },
+                raw: false,
+            })
+            if (cart) {
+                // update
+                await cart.destroy();
+            }
+            resolve({
+                errCode: 0,
+                message: 'OK'
+            });
+        } catch (error) {
+            reject(error);
+        }
+    })
+}
+
 
 module.exports = {
     create,
     gets,
     increase,
     decrease,
+    deletes,
+    deletecart
 }

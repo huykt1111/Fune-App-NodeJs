@@ -5,6 +5,9 @@ const router = express.Router();
 router.post(
     '/create', cartController.create
 );
+router.post(
+    '/deletes', cartController.deletes
+);
 router.get(
     '/gets', cartController.gets
 );
@@ -13,5 +16,8 @@ router.post(
 );
 router.post(
     '/decrease', cartController.decrease
+);
+router.post(
+    '/delete/cart', cartController.deletecart
 );
 export default router;

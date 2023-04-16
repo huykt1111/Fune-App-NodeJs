@@ -4,6 +4,15 @@ let create = async (req, res) => {
     let message = await cartService.create(req.body);
     return res.status(200).json(message);
 }
+let deletes = async (req, res) => {
+    let message = await cartService.deletes(req.body);
+    return res.status(200).json(message);
+}
+
+let deletecart = async (req, res) => {
+    let message = await cartService.deletecart(req.body);
+    return res.status(200).json(message);
+}
 
 let gets = async (req, res) => {
     let message = await cartService.gets(req.query);
@@ -25,4 +34,6 @@ module.exports = {
     gets,
     decrease,
     increase,
+    deletes,
+    deletecart
 }
