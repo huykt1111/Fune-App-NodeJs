@@ -10,6 +10,7 @@ import commentroom from './commentroom.route';
 import cartRoute from './cart.route';
 import paymentRoute from './payment.route';
 import orderRoute from './order.route';
+import livestreamRoute from './livestream.route'
 const router = express.Router();
 router.use('/product', productRoute);
 router.use('/post', postRoute);
@@ -21,5 +22,6 @@ router.use('/comment/room', commentroom);
 router.use('/cart', cartRoute);
 router.use('/payment', paymentRoute);
 router.use('/order', orderRoute);
+router.use('/livestream', livestreamRoute);
 router.use('/', authRoute);
 export default router;  
