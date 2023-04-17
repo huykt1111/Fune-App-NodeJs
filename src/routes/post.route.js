@@ -19,4 +19,12 @@ router.get(
   '/get',
   postController.get
 );
+router.get(
+  '/comment/gets',
+  postController.getCommentsByPostID
+)
+router.post(
+  '/comment/create',
+  postController.createComment
+)
 export default router;

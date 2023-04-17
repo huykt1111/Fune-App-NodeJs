@@ -26,6 +26,24 @@ const gets = async (req, res) => {
         posts, message
     })
 }
+const getCommentsByPostID = async (req, res) => {
+    console.log(req.query);
+    let { limit, offset, id_post } = req.query;
+    limit = Number(limit);
+    offset = Number(offset)
+    const { comments, message } = await postService.getCommentsByPostID({ limit, offset, id_post });
+    return res.status(200).json({
+        comments, message
+    })
+}
+const createComment = async (req, res) => {
+    const { id_post, id_parent, id_user, comment } = req.body
+    const { new_comment, message } = await postService.createComment({ id_post, id_parent, id_user, comment });
+    return res.status(200).json({
+        comment: new_comment
+    })
+
+};
 const get = async (req, res) => {
     const { id_post } = req.body
     const { post, message } = await postService.getPostByID({ id_post });
@@ -39,5 +57,5 @@ module.exports = {
     create,
     gets,
     get,
-    love
+    love, getCommentsByPostID, createComment
 }

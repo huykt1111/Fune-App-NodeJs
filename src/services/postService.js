@@ -195,7 +195,79 @@ const getPostByID = (data) => {
         }
     })
 }
+const getCommentsByPostID = (data) => {
+    const { limit, offset, id_post } = data;
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (id_post) {
+                const comments = await db.CommentPost.findAll({
+                    limit,
+                    offset,
+                    order: [['createdAt', 'DESC']],
+                    where: { id_post: id_post },
+                    include: [
+                        {
+                            model: db.User,
+                            as: 'User',
+                            attributes: ['id', 'email', 'image', [db.sequelize.fn('CONCAT', db.sequelize.col('User.firstName'), ' ', db.sequelize.col('User.lastName')), 'fullName']]
+                        },
+                    ],
+                    raw: true
+                }
+                )
+                let newComments = [];
+                if (comments) {
+                    newComments = await Promise.all(comments.map(async (element) => {
+                        const parentComment = await db.CommentPost.findOne({
+                            where: { id: element.id_parent },
+                            include: [
+                                {
+                                    model: db.User,
+                                    as: 'User',
+                                    attributes: []
+                                },
+                            ],
+                            attributes: [[db.sequelize.fn('CONCAT', db.sequelize.col('User.firstName'), ' ', db.sequelize.col('User.lastName')), 'parentName']],
+                            raw: true
+                        })
+                        const { "User.id": id_user, "User.fullName": fullname, "User.image": image, ...restCmt } = element
+                        return {
+                            id_user, fullname, image, ...restCmt, parent: parentComment
+                        }
 
+                    }));
+                    resolve({ comments: newComments, message: 'get comments success!' })
+                }
+                else {
+                    resolve({ message: 'Can not find out comments!' })
+                }
+            }
+            else {
+                resolve({ message: 'Can not find id_post!' })
+            }
+        } catch (e) {
+            reject(e);
+        }
+    })
+}
+const createComment = (data) => {
+    const { id_post, id_parent, id_user, comment } = data;
+    return new Promise(async (resolve, reject) => {
+        try {
+            const newRecord = await db.CommentPost.create({
+                id_post, id_parent, id_user, comment
+            }, { returning: true })
+            if (newRecord) {
+                resolve({
+                    message: 'OK',
+                    new_comment: newRecord
+                })
+            }
+        } catch (e) {
+            reject(e);
+        }
+    })
+}
 module.exports = {
-    create, gets, getPostByID, love
+    create, gets, getPostByID, love, getCommentsByPostID, createComment
 }
